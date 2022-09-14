@@ -19,7 +19,7 @@ while (!winnerFound)
     {
         gridState[turn.x, turn.y] = symbol == "1" ? "x" : "0";
         winnerFound = IsDiagonalWinner(symbol, gridState) || IsStraightWinner(symbol, gridState);
-        RenderGrid(gridState);
+        RenderGrid(gridState, Console.Out);
         if (winnerFound)
             Console.WriteLine((symbol == "1" ? "Crosses" : "Naughts") + "Wins");
         else
@@ -29,11 +29,18 @@ while (!winnerFound)
         Console.WriteLine("Already Taken");
 }
 
-void RenderGrid(string?[,] gridState)
+void RenderGrid(string?[,] gridState, TextWriter output)
 {
-    var gridRows = Enumerable.Range(0, gridState.GetUpperBound(0) + 1).Reverse().Select(y => string.Join('|', Enumerable.Range(0, gridState.GetUpperBound(1) + 1).Select(x => (gridState[x, y] ?? "-"))));
-    Console.Write(string.Join('\n', gridRows));
-    Console.WriteLine();
+    var gridRows = Enumerable.Range(0, gridState.GetUpperBound(0) + 1)
+    .Reverse()
+    .Select(y =>
+        string.Join('|',
+            Enumerable.Range(0, gridState.GetUpperBound(1) + 1)
+                .Select(x => (gridState[x, y] ?? "-"))
+        )
+    );
+    output.Write(string.Join('\n', gridRows));
+    output.WriteLine();
 }
 
 bool IsStraightWinner(string symbol, string?[,] gridState)
