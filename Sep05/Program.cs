@@ -39,14 +39,12 @@ void RenderGrid(string?[,] gridState)
 bool IsStraightWinner(string symbol, string?[,] gridState)
 {
     var across = Enumerable.Range(0, 3)
-    .SelectMany(b => Enumerable.Range(0, 3)
-        .Select(a => gridState[a, b]))
-    .All(x => x == symbol);
+    .Any(b => Enumerable.Range(0, 3)
+        .Select(a => gridState[a, b]).All(x => x == symbol));
 
     var down = Enumerable.Range(0, 3)
-    .SelectMany(b => Enumerable.Range(0, 3)
-        .Select(a => gridState[b, a]))
-    .All(x => x == symbol);
+    .Any(b => Enumerable.Range(0, 3)
+        .Select(a => gridState[b, a]).All(x => x == symbol));
 
     return across || down;
 }
