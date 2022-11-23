@@ -21,7 +21,6 @@ let doubleLetterCheck (x: string) =
     let rec innerCheck list =
         match list with
         | x :: y :: tl -> if (x = y) then true else innerCheck (y :: tl)
-        | [ _; _ ]
         | [ _ ]
         | [] -> false
     innerCheck (Array.toList (x.ToCharArray()))
