@@ -1,4 +1,6 @@
 ﻿
+let sw = new System.Diagnostics.Stopwatch()
+sw.Start()
 let prefix = "iwrupvqb"
 let incrementer n = n + 1
 let md5Instance = System.Security.Cryptography.MD5.Create()
@@ -8,6 +10,8 @@ let mapper a (b:int) = (md5Instance.ComputeHash(System.Text.Encoding.ASCII.GetBy
 
 let pipeline =  Seq.map (mapper prefix) posInts  |> Seq.map (fun a-> (System.Convert.ToBase64String(fst a),snd a))  |> (Seq.skipWhile (fun (a:string*int)-> kataCoinCheck (fst a))) 
 let result = Seq.head pipeline
+sw.Stop()
+printfn "Time taken : %d seconds" (sw.ElapsedMilliseconds/1000L)
 printfn "%s %d" (fst result) (snd result)  
 // For more information see https://aka.ms/fsharp-console-apps
 
