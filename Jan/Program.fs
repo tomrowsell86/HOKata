@@ -55,7 +55,7 @@ let primeNumberPrinter (input: string) =
                 (numbers, [])
 
         let (result, lastGroup) = Array.foldBack folder (input.ToCharArray()) ([], [])
-        List.where (fun x -> List.length x > 0) (result @ [ lastGroup ])
+        List.where (fun x -> List.length x > 0) (lastGroup :: result)
 
     numberChunker input
     |> List.collect (fun x -> numberCombinator x)
