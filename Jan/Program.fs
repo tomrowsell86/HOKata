@@ -60,7 +60,6 @@ let primeNumberPrinter (input: string) =
     numberChunker input
     |> List.collect (fun x -> numberCombinator x)
     |> List.where primeNumberDetector
-    |> List.distinct
 
 printfn "Enter a number:"
 let input = Console.ReadLine()
