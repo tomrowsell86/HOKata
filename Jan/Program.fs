@@ -44,17 +44,17 @@ let primeNumberPrinter (input: string) =
 
     let numberChunker (input: string) =
 
-        let folder (state: list<list<int>> * list<int>) (current: char) =
+        let folder (current: char)(state: list<list<int>> * list<int>)  =
             let (numbers, currentRun) = state
             let (isInt, intVal) = toInt current
             if isInt then
-                (numbers, currentRun @ [ intVal.Value ])
+                (numbers, intVal.Value::currentRun  )
             else if List.length currentRun > 0 then
-                ((numbers @ [currentRun]), [])
+                ((currentRun::numbers), [])
             else
                 (numbers, [])
 
-        let (result, lastGroup) = Array.fold folder ([], []) (input.ToCharArray())
+        let (result, lastGroup) = Array.foldBack folder  (input.ToCharArray())([], [])
         List.where (fun x -> List.length x > 0) (result @ [lastGroup])
 
     numberChunker input
