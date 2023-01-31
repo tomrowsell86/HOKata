@@ -11,7 +11,7 @@ let primeNumberDetector (n: int) =
             true
 
     match n with
-    | 1 -> false
+    | 1 | 0 -> false
     | x -> primeCheck x 2
 
 let primeNumberPrinter (input: string) =
