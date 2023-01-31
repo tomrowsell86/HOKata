@@ -9,8 +9,11 @@ let primeNumberDetector (n: int) =
                 false
         else
             true
+    match n with 
+        | 1 -> false
+        | x -> primeCheck x 2
 
-    primeCheck n 2
+
 
 let primeNumberPrinter (input: string) =
 
@@ -23,7 +26,7 @@ let primeNumberPrinter (input: string) =
         match values with
         | _ :: tl ->
 
-            let folder (state: list<int> * list<int>) (x: int) =
+            let outerFold (state: list<int> * list<int>) (x: int) =
                 let innerFold (state: int) (value: int) =
                     let result = (state * 10 + value)
                     result
@@ -34,7 +37,7 @@ let primeNumberPrinter (input: string) =
                 | _ :: tl -> (result @ List.scan innerFold x tailInts, tl)
                 | [] -> state
 
-            let (res, _) = List.fold folder ([], tl) values
+            let (res, _) = List.fold outerFold ([], tl) values
             res
 
         | [] -> raise (SystemException("Empty list passed"))
@@ -47,12 +50,12 @@ let primeNumberPrinter (input: string) =
             if isInt then
                 (numbers, currentRun @ [ intVal.Value ])
             else if List.length currentRun > 0 then
-                ((currentRun :: numbers), [])
+                ((numbers @ [currentRun]), [])
             else
                 (numbers, [])
 
         let (result, lastGroup) = Array.fold folder ([], []) (input.ToCharArray())
-        List.where (fun x -> List.length x > 0) (lastGroup :: result)
+        List.where (fun x -> List.length x > 0) (result @ [lastGroup])
 
     numberChunker input
     |> List.collect (fun x -> numberCombinator x)
