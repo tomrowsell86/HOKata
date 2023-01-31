@@ -2,16 +2,13 @@
 
 let primeNumberDetector (n: int) =
     let rec primeCheck (candidate: int) (divider: int) =
-        if (candidate / 2 >= divider) then
-            if (candidate % divider) <> 0 then
-                primeCheck candidate (divider + 1)
-            else
-                false
-        else
-            true
+        if (candidate / 2 < divider) then true
+        else if (candidate % divider) = 0 then false
+        else primeCheck candidate (divider + 1)
 
     match n with
-    | 1 | 0 -> false
+    | 1
+    | 0 -> false
     | x -> primeCheck x 2
 
 let primeNumberPrinter (input: string) =
